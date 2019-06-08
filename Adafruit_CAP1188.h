@@ -58,6 +58,11 @@
 #define CAP1188_LEDPOL                                                         \
   0x73 ///< LED Polarity. Controls the output polarity of LEDs.
 
+// NEW STUFF
+#define CAP1188_ANALOGID 0x10// returns analog values
+#define CAP1188_SENSITIVITY 0x42// controls standby sensitivity
+#define CAP188_SENSITIVYCONTROL 0x1F// controls sensitivity as well
+
 /*!
  *    @brief  Class that stores state and functions for interacting with
  *            CAP1188 Sensor
@@ -78,6 +83,9 @@ public:
   uint8_t touched();
   void LEDpolarity(uint8_t x);
   void i2cwrite(uint8_t x);
+  // NEW STUFF
+  void setSensitivity(int sensitivity);
+  uint8_t touchedAnalog(byte offset);
 
 private:
   void spi_begin();

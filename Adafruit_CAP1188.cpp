@@ -163,6 +163,44 @@ boolean Adafruit_CAP1188::begin(uint8_t i2caddr, TwoWire *theWire) {
   return true;
 }
 
+void Adafruit_CAP1188::setSensitivity(int sensitivity){
+
+  switch (sensitivity) {
+
+    //least sensitive
+    case 1:
+      writeRegister(CAP188_SENSITIVYCONTROL,0x70);
+      break;
+    case 2:
+      writeRegister(CAP188_SENSITIVYCONTROL,0x60);
+      break;
+    case 3:
+      writeRegister(CAP188_SENSITIVYCONTROL,0x50);
+      break;
+    case 4:
+      writeRegister(CAP188_SENSITIVYCONTROL,0x40);
+      break;
+    case 5:
+      writeRegister(CAP188_SENSITIVYCONTROL,0x30);
+      break;
+    case 6:
+      writeRegister(CAP188_SENSITIVYCONTROL,0x20);
+      break;
+    case 7:
+      writeRegister(CAP188_SENSITIVYCONTROL,0x10);
+      break;
+    //most sensitive
+    case 8:
+      writeRegister(CAP188_SENSITIVYCONTROL, 0);
+      break;
+  }
+
+  // Read the sensor sensitivity
+  Serial.print("Sensitivity in HEX: 0x");
+  Serial.println(readRegister(CAP188_SENSITIVYCONTROL), HEX);
+
+}
+
 /*!
  *   @brief  Reads the touched status (CAP1188_SENINPUTSTATUS)
  *   @return Returns read from CAP1188_SENINPUTSTATUS where 1 is touched, 0 not
@@ -174,6 +212,14 @@ uint8_t Adafruit_CAP1188::touched() {
     writeRegister(CAP1188_MAIN, readRegister(CAP1188_MAIN) & ~CAP1188_MAIN_INT);
   }
   return t;
+}
+
+uint8_t Adafruit_CAP1188::touchedAnalog(byte offset){
+  uint8_t t = readRegister(CAP1188_ANALOGID + offset);
+  if (t) {
+    writeRegister(CAP1188_MAIN, readRegister(CAP1188_MAIN) & ~CAP1188_MAIN_INT);
+  }
+  return t;// we make sure we don't the the 8 byte
 }
 
 /*!
