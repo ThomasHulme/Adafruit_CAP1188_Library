@@ -1,3 +1,9 @@
+# Differences:
+* Added aility to set sensitivity.
+* Added analogue read.
+
+---
+
 Adafruit_CAP1188 [![Build Status](https://travis-ci.com/adafruit/Adafruit_CAP1188Library.svg?branch=master)](https://travis-ci.com/adafruit/Adafruit_CAP1188_Library)
 ================
 
